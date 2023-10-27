@@ -1,0 +1,31 @@
+version: '3'
+services:
+  web:
+    build: .
+    ports:
+      - "127.0.0.1:8000:127.0.0.1:8000"
+    depends_on:
+      - db
+    networks:
+      - mynetwork
+    volumes:
+      - .:/app
+    environment:
+      - DJANGO_SETTINGS_MODULE=ecomm_apis.settings
+
+  db:
+    platform: linux/x86_64
+    image: mysql
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: pass123
+      MYSQL_ALLOW_EMPTY_PASSWORD: 1
+      MYSQL_DATABASE: ecomm_app_db
+      MYSQL_USER: mysql
+      MYSQL_PASSWORD: pass123
+    networks:
+      - mynetwork
+
+networks:
+  mynetwork:
